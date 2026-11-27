@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Examination System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">Online Examination System</div>
+    <nav class="tabs" aria-label="Primary">
+      <button class="tab-btn active" data-tab="take-exam">Take Exam</button>
+      <button class="tab-btn" data-tab="add-question">Question Bank</button>
+      <button class="tab-btn" data-tab="create-exam">Create Exam</button>
+      <button class="tab-btn" data-tab="history-toppers">History &amp; Toppers</button>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div id="alert-box" class="alert hidden"></div>
+
+    <!-- TAB 1: TAKE EXAM -->
+    <section id="take-exam" class="tab-panel active">
+      <div id="exam-setup" class="card">
+        <h2>Start an Examination</h2>
+        <div class="grid-3">
+          <label>Student Name
+            <input type="text" id="student-name" placeholder="e.g. Aarav Sharma" required>
+          </label>
+          <label>Roll Number
+            <input type="text" id="student-roll" placeholder="e.g. 25CSE104" required>
+          </label>
+          <label>Select Exam
+            <select id="exam-select"></select>
+          </label>
+        </div>
+        <button id="start-exam-btn" class="btn primary">Start Timed Exam</button>
+      </div>
+
+      <div id="exam-runner" class="card hidden">
+        <div class="runner-header">
+          <div>
+            <h2 id="active-exam-title">Exam</h2>
+            <p class="muted" id="active-student-label"></p>
+          </div>
+          <div class="timer-badge">Time Left: <span id="timer-display">00:00</span></div>
+        </div>
+        <div id="questions-container"></div>
+        <button id="submit-exam-btn" class="btn primary">Submit Exam</button>
+      </div>
+
+      <div id="exam-result" class="card hidden">
+        <h2>Examination Result</h2>
+        <div class="score-banner">
+          <div>Score: <strong id="res-score">0 / 0</strong></div>
+          <div>Time Taken: <strong id="res-time">0s</strong></div>
+        </div>
+        <div id="result-breakdown"></div>
+        <button id="retake-btn" class="btn secondary">Back to Exam List</button>
+      </div>
+    </section>
+
+    <!-- TAB 2: ADD QUESTION -->
+    <section id="add-question" class="tab-panel">
+      <div class="card">
+        <h2>Add Multiple-Choice Question</h2>
+        <form id="question-form">
+          <div class="grid-2">
+            <label>Subject
+              <input type="text" id="q-subject" placeholder="e.g. Core Java" required>
+            </label>
+            <label>Correct Option
+              <select id="q-correct">
+                <option value="A">Option A</option>
+                <option value="B">Option B</option>
+                <option value="C">Option C</option>
+                <option value="D">Option D</option>
+              </select>
+            </label>
+          </div>
+          <label>Question Prompt
+            <textarea id="q-prompt" rows="2" placeholder="Enter the question..." required></textarea>
+          </label>
+          <div class="grid-2">
+            <label>Option A <input type="text" id="q-opt-a" required></label>
+            <label>Option B <input type="text" id="q-opt-b" required></label>
+            <label>Option C <input type="text" id="q-opt-c" required></label>
+            <label>Option D <input type="text" id="q-opt-d" required></label>
+          </div>
+          <button type="submit" class="btn primary">Save Question</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h3>Existing Question Bank</h3>
+        <table>
+          <thead>
+            <tr><th>ID</th><th>Subject</th><th>Prompt</th><th>Answer</th></tr>
+          </thead>
+          <tbody id="question-table-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TAB 3: CREATE EXAM -->
+    <section id="create-exam" class="tab-panel">
+      <div class="card">
+        <h2>Create New Exam</h2>
+        <form id="exam-form">
+          <div class="grid-2">
+            <label>Exam Title
+              <input type="text" id="e-title" placeholder="e.g. Java Collections Quiz" required>
+            </label>
+            <label>Time Limit (Minutes)
+              <input type="number" id="e-duration" min="1" value="10" required>
+            </label>
+          </div>
+          <h3>Select Questions</h3>
+          <div id="exam-question-checklist" class="checklist"></div>
+          <button type="submit" class="btn primary">Create Exam</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- TAB 4: HISTORY & TOPPERS -->
+    <section id="history-toppers" class="tab-panel">
+      <div class="card">
+        <div class="row-between">
+          <h2>Topper List</h2>
+          <select id="topper-exam-filter"></select>
+        </div>
+        <table>
+          <thead>
+            <tr><th>Rank</th><th>Student</th><th>Roll No</th><th>Exam</th><th>Score</th><th>Time</th></tr>
+          </thead>
+          <tbody id="toppers-body"></tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="row-between">
+          <h2>Student Examination History</h2>
+          <div class="row-gap">
+            <input type="text" id="history-roll-filter" placeholder="Filter by Roll No...">
+            <a href="/api/export" class="btn secondary">Export CSV</a>
+          </div>
+        </div>
+        <table>
+          <thead>
+            <tr><th>ID</th><th>Student</th><th>Roll No</th><th>Exam</th><th>Score</th><th>Time</th><th>Date</th></tr>
+          </thead>
+          <tbody id="history-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
