@@ -10,7 +10,7 @@ public class DBConnection {
     private static final String DB_URL =
             "jdbc:mysql://localhost:3306/online_exam_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
     private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "#"; // Set your MySQL password here
+    private static final String DB_PASSWORD = "git#"; // Set your MySQL password here
 
     private static Connection connection;
 
